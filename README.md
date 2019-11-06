@@ -1,6 +1,8 @@
 # Fusion2Pyblluet
 
-Exporter script [URDF exporter](https://github.com/syuntoku14/fusion2urdf)
+Original version of Exporterer: [URDF exporter](https://github.com/syuntoku14/fusion2urdf)
+
+Also planning to rewrite an exporter getting avoid of extra units transformation and supporting nested-component export (`./exportURDF/`)
 
 ### Before using script
 
