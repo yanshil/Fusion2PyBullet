@@ -1,13 +1,12 @@
 # Fusion2Pyblluet
 
-Original version of Exporterer: [URDF exporter](https://github.com/syuntoku14/fusion2urdf)
+Fusion 360 scrip to export URDF from Fusion360. **CURRENTLY NOT SUPPORT NESTED COMPONENT** 
 
-Also planning to rewrite an exporter getting avoid of extra units transformation and supporting nested-component export (`./exportURDF/`)
+* .urdf file of the model
+* .stl files of the model
+* A template `hello_pybullet.py` for loading the model in PyBullet
 
-### Requirement
-* ruby [required].
-* dos2unix [option]. If you are under Windows, using dos2unix might get avoid of some errors caused by line ending issues.
-* ROS enviorment [option]. If you do not want to install an ROS environment, you need to remove the prefix of `package://fusion2urdf/$robot_name/` in your urdf file. But `check_urdf` is a very useful tool for validating urdf structure.
+(Develop notes for nest component support: https://github.com/yanshil/fusion2urdf/tree/nest_component_support, might takes forever though....)
 
 ### Before using script
 
@@ -19,56 +18,34 @@ Also planning to rewrite an exporter getting avoid of extra units transformation
 4. Nested components are not supported by the exporter. Tidy the nested components by `Decpature Deisign history` , split components and reset all links
 
 ### Using script inside Fusion 360
-5. Export urdf files (e.g. export to folder `./$robot_name/`) and get
+
+5. Add script into Fusion 360 and run.  You will get a folder named after the project containing these files.
 
 ```
-./$robot_name/
-./$robot_name/$robot_name.urdf
-./$robot_name/mm_stl/*.stl
-```
-
-### After origin stl under `mm_stl/` and urdf files exported...
-8. [option] If under OS not Unix, use `dos2unix` for the output files
-
-```bash
-cd ./$robot_name/
-find . -type f -print0 | xargs -0 dos2unix
-```
-
-
-### Get `bin_stl/*.stl` files (Ruby is required)
-
-9. Put your robot folder (e.g. `robot/`) alongside `stl2binary.bash`
-
-```
-cd .. ## maybe? depends on where you put your folders
-bash stl2binary.bash robot
-```
-
-### Fix the prefix if you didn't install ROS
-
-* Option 1: Installed ROS envioronment as in the exportor. You don't need to remove the prefix of `package://fusion2urdf/$robot_name/`
-
-* Option 2: Without installing ROS
-
-Open `robot.urdf`, remove all prefix of `package://fusion2urdf/robot/`
-
-
-### Run Pybullet
-
-Modify the relative path of urdf files so that py can load the model correctly.
-
-```
-## Folder structure should look like
+$ find .
+.
 ./hello_bullet.py
-./robot/bin_stl/*.stl
+./meshes
+./meshes/*.stl
+./test.urdf
 ```
 
-Run `python hello_bullet.py`
+### Run PyBullet
 
-### examples
-* `hello_pybullet`: load model
-* `humanoid_manual_control`: look for revolute and prismatic joints and set them as parameters
+```
+python hello_bullet.py
+```
+
+### Updates
+
+* 02/07/2020: remove gazebo dependencies and adjust script for PyBullet.
+* 02/07/2020: remove Ruby dependencies for stl conversion (From @[alansrobotlab](https://github.com/alansrobotlab)'s pull request)
+* 10/14/2019: pipeline Fusion2PyBullet from @[syuntoku14](https://github.com/syuntoku14/fusion2urdf/commits?author=syuntoku14)'s project
+
+### PyBullet examples
+
+* `hello_pybullet`: Simply load model
+* `humanoid_manual_control`: Look for revolute and prismatic joints and set them as parameters
 * `mountCamera_paras`: File needs to be modified correctly.
 Bind a camera on the end-effector of the robot. Modify the link ID to get correct behavior. Original example comes from [Issue #1616](https://github.com/bulletphysics/bullet3/issues/1616)
 
