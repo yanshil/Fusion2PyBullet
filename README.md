@@ -1,6 +1,6 @@
 # Fusion2Pyblluet
 
-Fusion 360 scrip to export URDF from Fusion360. **CURRENTLY NOT SUPPORT NESTED COMPONENT** 
+Fusion 360 scripts to export URDF from Fusion360. **CURRENTLY NOT SUPPORT NESTED COMPONENT** 
 
 * .urdf file of the model
 * .stl files of the model
