@@ -1,10 +1,12 @@
-# fusion2urdf
+# Fusion2Pybullet
 
 Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf). 
 
 ### What is this script?
 
-A Fusion 360 script to export urdf files. This is a PyBullet adpative version. **BETA: Supporting exportation of nested components now**
+A Fusion 360 script to export urdf files. This is a PyBullet adpative version. 
+
+**03/25/2020 BETA: Supporting exportation of nested components**
 
 This exports:
 
