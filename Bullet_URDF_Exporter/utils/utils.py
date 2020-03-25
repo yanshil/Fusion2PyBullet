@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun May 12 19:15:34 2019
+""" 
+Copy to new components and export stls.
 
-@author: syuntoku
+@syuntoku
+@yanshil
 """
 
 import adsk, adsk.core, adsk.fusion

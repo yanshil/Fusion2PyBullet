@@ -1,5 +1,10 @@
-#Author-syuntoku14
-#Description-Generate URDF file from Fusion 360
+# -*- coding: utf-8 -*-
+""" 
+Export PyBullet adaptive stl and URDF file
+
+@syuntoku
+@yanshil
+"""
 
 import adsk, adsk.core, adsk.fusion, traceback
 import os
