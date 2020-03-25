@@ -1,56 +1,62 @@
-# Fusion2Pyblluet
+# fusion2urdf
 
-Fusion 360 scripts to export URDF from Fusion360. **CURRENTLY NOT SUPPORT NESTED COMPONENT** 
+Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf)
 
-* .urdf file of the model
-* .stl files of the model
-* A template `hello_pybullet.py` for loading the model in PyBullet
+### What is this script?
 
-(Develop notes for nest component support: https://github.com/yanshil/fusion2urdf/tree/nest_component_support, might takes forever though....)
+A Fusion 360 script to export urdf files. This is a PyBullet adpative version.  **CURRENTLY NOT SUPPORT NESTED COMPONENT** 
 
-### Before using script
+This exports:
 
-1. Refer to the exporter [Before using this script]( https://github.com/syuntoku14/fusion2urdf#before-using-this-script )
-2. Some other notes for getting avoid of warnings: 
+* .urdf files of the model
+* .stl files of your model
+* A example hello.py to load your model into PyBullet.
+
+### Fusion Add-in
+Add this script into Fusion 360 via Tools -> Add-Ins
+
+![](https://github.com/yanshil/fusion2urdf/blob/images/addin.png)
+
+
+
+#### Before using this script
+
+1. Some other notes for getting avoid of warnings: 
    1. Change language preference to English
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
-3. Set up `base_link` and `Unground` any grounded components
-4. Nested components are not supported by the exporter. Tidy the nested components by `Decpature Deisign history` , split components and reset all links
+2. Set up `base_link`
+3. Nested components are not supported by the exporter. Tidy the nested components by `Decpature Deisign history` , split components and reset all links
 
-### Using script inside Fusion 360
+#### Using script inside Fusion 360: Example
 
-5. Add script into Fusion 360 and run.  You will get a folder named after the project containing these files.
+1. Set up the compoenents properly
 
-```
-$ find .
-.
-./hello_bullet.py
-./meshes
-./meshes/*.stl
-./test.urdf
-```
+- [x] A base_link
 
-### Run PyBullet
+- [x] Check component and joint names (Set English as the language if necessary)
 
-```
-python hello_bullet.py
-```
+- [x] Set up joints properly
+	
+	* In fusion, when you hit 'J' to assemble joints, note that the exporter consider **component 1 as 'child' and component 2 as 'parent'**. For example, when you want to assemble a 4-wheel car with middle cuboid as `base_link`, you should assemble the vehicle with wheel as component 1 and 'base_link' as component 2.
 
-### Updates
+	* For example, you should be assemble your model to make result of `check_urdf simple_car.urdf`  like the following. i.e. BL, BR, FL, FR as component 1 and base_link as component 2 when you assemble these 4 joints.
+	```
+    robot name is: simple_car
+	  ---------- Successfully Parsed XML ---------------
+	  root Link: base_link has 4 child(ren)
+	      child(1):  BL_1
+	      child(2):  BR_1
+	      child(3):  FL_1
+	      child(4):  FR_1
+	```
 
-* 02/07/2020: remove gazebo dependencies and adjust script for PyBullet.
-* 02/07/2020: remove Ruby dependencies for stl conversion (From @[alansrobotlab](https://github.com/alansrobotlab)'s pull request)
-* 10/14/2019: pipeline Fusion2PyBullet from @[syuntoku14](https://github.com/syuntoku14/fusion2urdf/commits?author=syuntoku14)'s project
+2. Run the script and select storing location
+   * Note: **Don't save** your file after running the scripts! Some temporary "old component" will be created
+   
+   * ![](https://github.com/yanshil/fusion2urdf/blob/images/2.png)
+   
+   * ![](https://github.com/yanshil/fusion2urdf/blob/images/files.png)
+   
+    
+3. Enjoy from `python hello_bullet.py` !
 
-### PyBullet examples
-
-* `hello_pybullet`: Simply load model
-* `humanoid_manual_control`: Look for revolute and prismatic joints and set them as parameters
-* `mountCamera_paras`: File needs to be modified correctly.
-Bind a camera on the end-effector of the robot. Modify the link ID to get correct behavior. Original example comes from [Issue #1616](https://github.com/bulletphysics/bullet3/issues/1616)
-
-## Ref
-
-* URDF exporter: https://github.com/syuntoku14/fusion2urdf
-
-* WSL & ros: https://janbernloehr.de/2017/06/10/ros-windows

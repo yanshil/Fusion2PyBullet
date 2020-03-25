@@ -1,0 +1,4 @@
+__pycache__
+*.pyc
+URDF_Exporter/.vscode/launch.json
+URDF_Exporter/.vscode/settings.json
