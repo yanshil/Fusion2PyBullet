@@ -90,10 +90,10 @@ def write_joint_tran_urdf(joints_dict, repo, links_xyz_dict, file_name):
             except KeyError as ke:
                 app = adsk.core.Application.get()
                 ui = app.userInterface
-                ui.messageBox("There seems to be an error with the connection between\n\n%s\nand\n%s\n\nCheck \
+                ui.messageBox("Joint %s: There seems to be an error with the connection between\n\n%s\nand\n%s\n\nCheck \
 whether the connections\nparent=component2=%s\nchild=component1=%s\nare correct or if you need \
 to swap component1<=>component2"
-                % (parent, child, parent, child), "Error!")
+                % (j, parent, child, parent, child), "Error!")
                 quit()
                 
             joint = Joint.Joint(name=j, joint_type = joint_type, xyz=xyz, \
