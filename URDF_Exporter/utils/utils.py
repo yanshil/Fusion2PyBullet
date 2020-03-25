@@ -11,6 +11,20 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 
 
+## https://github.com/django/django/blob/master/django/utils/text.py
+def get_valid_filename(s):
+    """
+    Return the given string converted to a string that can be used for a clean
+    filename. Remove leading and trailing spaces; convert other spaces to
+    underscores; and remove anything that is not an alphanumeric, dash,
+    underscore, or dot.
+    >>> get_valid_filename("john's portrait in 2004.jpg")
+    'johns_portrait_in_2004.jpg'
+    """
+    s = str(s).strip().replace(' ', '_')
+    return re.sub(r'(?u)[^-\w.]', '', s)
+
+
 def copy_occs(root):    
     """    
     duplicate all the components
@@ -31,15 +45,20 @@ def copy_occs(root):
             occs.component.name = 'old_component'
             new_occs.component.name = 'base_link'
         else:
-            new_occs.component.name = re.sub('[ :()]', '_', occs.name)
+            key = get_valid_filename(occs.fullPathName)
+            new_occs.component.name = key
+            # new_occs.component.name = re.sub('[ :()]', '_', occs.name)
         new_occs = allOccs[-1]
         for i in range(bodies.count):
             body = bodies.item(i)
             body.copyToComponent(new_occs)
     
     allOccs = root.occurrences
+    # allOccs = root.allOccurrences
+    
     oldOccs = []
-    coppy_list = [occs for occs in allOccs]
+    # coppy_list = [occs for occs in allOccs]
+    coppy_list = [occs for occs in root.allOccurrences]
     for occs in coppy_list:
         if occs.bRepBodies.count > 0:
             copy_body(allOccs, occs)
@@ -72,10 +91,17 @@ def export_stl(design, save_dir, components):
     for component in components:
         allOccus = component.allOccurrences
         for occ in allOccus:
+            ## Don't export nested component
+            if occ.childOccurrences.count > 0:
+                continue
+
             if 'old_component' not in occ.component.name:
                 try:
-                    print(occ.component.name)
-                    fileName = scriptDir + "/" + occ.component.name              
+                    key = get_valid_filename(occ.fullPathName)
+                    key = key[:-1] ## Will generate an extra "1" in the end, remove it
+                    print("Export file: {}".format(key))
+                    # fileName = scriptDir + "/" + occ.component.name
+                    fileName = scriptDir + "/" + key
                     # create stl exportOptions
                     stlExportOptions = exportMgr.createSTLExportOptions(occ, fileName)
                     stlExportOptions.sendToPrintUtility = False
@@ -84,7 +110,7 @@ def export_stl(design, save_dir, components):
                     stlExportOptions.meshRefinement = adsk.fusion.MeshRefinementSettings.MeshRefinementLow
                     exportMgr.execute(stlExportOptions)
                 except:
-                    print('Component ' + occ.component.name + 'has something wrong.')
+                    print('Component ' + occ.component.name + ' has something wrong.')
                 
 
 def file_dialog(ui):     

@@ -1,10 +1,10 @@
 # fusion2urdf
 
-Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf)
+Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf). 
 
 ### What is this script?
 
-A Fusion 360 script to export urdf files. This is a PyBullet adpative version.  **CURRENTLY NOT SUPPORT NESTED COMPONENT** 
+A Fusion 360 script to export urdf files. This is a PyBullet adpative version. **BETA: Supporting exportation of nested components now**
 
 This exports:
 
@@ -25,7 +25,6 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    1. Change language preference to English
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
 2. Set up `base_link`
-3. Nested components are not supported by the exporter. Tidy the nested components by `Decpature Deisign history` , split components and reset all links
 
 #### Using script inside Fusion 360: Example
 
@@ -35,7 +34,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 
 - [x] Check component and joint names (Set English as the language if necessary)
 
-- [x] Set up joints properly
+- [x] **IMPORTANT! Set up joints properly**
 	
 	* In fusion, when you hit 'J' to assemble joints, note that the exporter consider **component 1 as 'child' and component 2 as 'parent'**. For example, when you want to assemble a 4-wheel car with middle cuboid as `base_link`, you should assemble the vehicle with wheel as component 1 and 'base_link' as component 2.
 
@@ -57,6 +56,5 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    
    * ![](https://github.com/yanshil/fusion2urdf/blob/images/files.png)
    
-    
 3. Enjoy from `python hello_bullet.py` !
 

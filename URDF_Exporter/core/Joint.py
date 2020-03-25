@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun May 12 20:17:17 2019
+""" 
+Export joint infos to XML from Fusion 360
 
-@author: syuntoku
+@syuntoku
+@yanshil
 """
 
 import adsk, re
@@ -97,6 +98,7 @@ class Joint:
         
         self.tran_xml = "\n".join(utils.prettify(tran).split("\n")[1:])
 
+########## Nested-component support ########## 
 
 def make_joints_dict(root, msg):
     """
@@ -118,76 +120,126 @@ def make_joints_dict(root, msg):
         Tell the status
     """
 
+    joints_dict = {}
+    
+    ## Root joints
+    for joint in root.joints:
+        joint_dict = get_joint_dict(joint)
+        if type(joint_dict) is dict:
+            key = utils.get_valid_filename(joint.name)
+            joints_dict[key] = joint_dict
+        else: ## Error happens and throw an msg
+            msg = joint_dict
+    
+    ## Traverse non-root nested components
+    nonroot_joints_dict = traverseAssembly(root.occurrences.asList, 1)
+    
+    ## Combine
+    joints_dict.update(nonroot_joints_dict)
+    
+    return joints_dict, msg
+
+
+## TODO: Make msg more accurate and elegent
+def traverseAssembly(occurrences, currentLevel, joints_dict={}, msg='Successfully create URDF file'):
+    
+    for i in range(0, occurrences.count):
+        occ = occurrences.item(i)
+
+        if occ.component.joints.count > 0:
+            for joint in occ.component.joints:
+                ass_joint = joint.createForAssemblyContext(occ)
+                joint_dict = get_joint_dict(ass_joint)
+                if type(joint_dict) is dict:
+                    key = utils.get_valid_filename(occ.fullPathName) + '_' + joint.name
+                    joints_dict[key] = joint_dict
+                else: ## Error happens and throw an msg
+                    msg = joint_dict
+                # tmp_joints_dict, msg = make_joints_dict(ass_joint, msg)
+                if msg != 'Successfully create URDF file':
+                    print('Check Component: ' + comp.name + '\t Joint: ' + joint.name)
+                    return 0
+
+                # print('Level {} {}: Joint {}.'.format(currentLevel, occ.name, ass_joint.name))
+        else:
+            pass
+            # print('Level {} {} has no joints.'.format(currentLevel, occ.name))
+        
+        if occ.childOccurrences:
+            joints_dict = traverseAssembly(occ.childOccurrences, currentLevel + 1, joints_dict, msg)
+
+    return joints_dict
+
+
+
+def get_joint_dict(joint):
     joint_type_list = [
     'fixed', 'revolute', 'prismatic', 'Cylinderical',
     'PinSlot', 'Planner', 'Ball']  # these are the names in urdf
-
-    joints_dict = {}
     
-    for joint in root.joints:
-        joint_dict = {}
-        joint_type = joint_type_list[joint.jointMotion.jointType]
-        joint_dict['type'] = joint_type
-        
-        # swhich by the type of the joint
-        joint_dict['axis'] = [0, 0, 0]
-        joint_dict['upper_limit'] = 0.0
-        joint_dict['lower_limit'] = 0.0
-        
-        # support  "Revolute", "Rigid" and "Slider"
-        if joint_type == 'revolute':
-            joint_dict['axis'] = [round(i, 6) for i in \
-                joint.jointMotion.rotationAxisVector.asArray()] ## In Fusion, exported axis is normalized.
-            max_enabled = joint.jointMotion.rotationLimits.isMaximumValueEnabled
-            min_enabled = joint.jointMotion.rotationLimits.isMinimumValueEnabled            
-            if max_enabled and min_enabled:  
-                joint_dict['upper_limit'] = round(joint.jointMotion.rotationLimits.maximumValue, 6)
-                joint_dict['lower_limit'] = round(joint.jointMotion.rotationLimits.minimumValue, 6)
-            elif max_enabled and not min_enabled:
-                msg = joint.name + 'is not set its lower limit. Please set it and try again.'
-                break
-            elif not max_enabled and min_enabled:
-                msg = joint.name + 'is not set its upper limit. Please set it and try again.'
-                break
-            else:  # if there is no angle limit
-                joint_dict['type'] = 'continuous'
-                
-        elif joint_type == 'prismatic':
-            joint_dict['axis'] = [round(i, 6) for i in \
-                joint.jointMotion.slideDirectionVector.asArray()]  # Also normalized
-            max_enabled = joint.jointMotion.slideLimits.isMaximumValueEnabled
-            min_enabled = joint.jointMotion.slideLimits.isMinimumValueEnabled            
-            if max_enabled and min_enabled:  
-                joint_dict['upper_limit'] = round(joint.jointMotion.slideLimits.maximumValue/100, 6)
-                joint_dict['lower_limit'] = round(joint.jointMotion.slideLimits.minimumValue/100, 6)
-            elif max_enabled and not min_enabled:
-                msg = joint.name + 'is not set its lower limit. Please set it and try again.'
-                break
-            elif not max_enabled and min_enabled:
-                msg = joint.name + 'is not set its upper limit. Please set it and try again.'
-                break
-        elif joint_type == 'fixed':
-            pass
-        
-        if joint.occurrenceTwo.component.name == 'base_link':
-            joint_dict['parent'] = 'base_link'
-        else:
-            joint_dict['parent'] = re.sub('[ :()]', '_', joint.occurrenceTwo.name)
-        joint_dict['child'] = re.sub('[ :()]', '_', joint.occurrenceOne.name)
-        
+    joint_dict = {}
+    joint_type = joint_type_list[joint.jointMotion.jointType]
+    joint_dict['type'] = joint_type
+    
+    # swhich by the type of the joint
+    joint_dict['axis'] = [0, 0, 0]
+    joint_dict['upper_limit'] = 0.0
+    joint_dict['lower_limit'] = 0.0
+    
+    # support  "Revolute", "Rigid" and "Slider"
+    if joint_type == 'revolute':
+        joint_dict['axis'] = [round(i, 6) for i in \
+            joint.jointMotion.rotationAxisVector.asArray()] ## In Fusion, exported axis is normalized.
+        max_enabled = joint.jointMotion.rotationLimits.isMaximumValueEnabled
+        min_enabled = joint.jointMotion.rotationLimits.isMinimumValueEnabled            
+        if max_enabled and min_enabled:  
+            joint_dict['upper_limit'] = round(joint.jointMotion.rotationLimits.maximumValue, 6)
+            joint_dict['lower_limit'] = round(joint.jointMotion.rotationLimits.minimumValue, 6)
+        elif max_enabled and not min_enabled:
+            msg = joint.name + 'is not set its lower limit. Please set it and try again.'
+            return msg
+        elif not max_enabled and min_enabled:
+            msg = joint.name + 'is not set its upper limit. Please set it and try again.'
+            return msg
+        else:  # if there is no angle limit
+            joint_dict['type'] = 'continuous'
+            
+    elif joint_type == 'prismatic':
+        joint_dict['axis'] = [round(i, 6) for i in \
+            joint.jointMotion.slideDirectionVector.asArray()]  # Also normalized
+        max_enabled = joint.jointMotion.slideLimits.isMaximumValueEnabled
+        min_enabled = joint.jointMotion.slideLimits.isMinimumValueEnabled            
+        if max_enabled and min_enabled:  
+            joint_dict['upper_limit'] = round(joint.jointMotion.slideLimits.maximumValue/100, 6)
+            joint_dict['lower_limit'] = round(joint.jointMotion.slideLimits.minimumValue/100, 6)
+        elif max_enabled and not min_enabled:
+            msg = joint.name + 'is not set its lower limit. Please set it and try again.'
+            return msg
+        elif not max_enabled and min_enabled:
+            msg = joint.name + 'is not set its upper limit. Please set it and try again.'
+            return msg
+    elif joint_type == 'fixed':
+        pass
+    
+    if joint.occurrenceTwo.component.name == 'base_link':
+        joint_dict['parent'] = 'base_link'
+    else:  
+        joint_dict['parent'] = utils.get_valid_filename(joint.occurrenceTwo.fullPathName)
+    joint_dict['child'] = utils.get_valid_filename(joint.occurrenceOne.fullPathName)
+    
+    try:
+        joint_dict['xyz'] = [round(i / 100.0, 6) for i in \
+        joint.geometryOrOriginOne.origin.asArray()]  # converted to meter
+    except:
         try:
-            joint_dict['xyz'] = [round(i / 100.0, 6) for i in \
-            joint.geometryOrOriginOne.origin.asArray()]  # converted to meter
+            if type(joint.geometryOrOriginTwo)==adsk.fusion.JointOrigin:
+                data = joint.geometryOrOriginTwo.geometry.origin.asArray()
+            else:
+                data = joint.geometryOrOriginTwo.origin.asArray()
+            joint_dict['xyz'] = [round(i / 100.0, 6) for i in data]  # converted to meter
         except:
-            try:
-                if type(joint.geometryOrOriginTwo)==adsk.fusion.JointOrigin:
-                    data = joint.geometryOrOriginTwo.geometry.origin.asArray()
-                else:
-                    data = joint.geometryOrOriginTwo.origin.asArray()
-                joint_dict['xyz'] = [round(i / 100.0, 6) for i in data]  # converted to meter
-            except:
-                msg = joint.name + " doesn't have joint origin. Please set it and run again."
-                break
-        
-        joints_dict[joint.name] = joint_dict
-    return joints_dict, msg
+            msg = joint.name + " doesn't have joint origin. Please set it and run again."
+            return msg
+
+    # print("Processed joint {}, parent {}, child {}".format(joint.name, joint_dict['parent'], joint_dict['child']))
+    return joint_dict
