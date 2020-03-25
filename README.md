@@ -12,12 +12,12 @@ This exports:
 * .stl files of your model
 * A example hello.py to load your model into PyBullet.
 
+If it is not working well (usually caused by wrongly set up joints relationships), you can try to use the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.
+
 ### Fusion Add-in
 Add this script into Fusion 360 via Tools -> Add-Ins
 
 ![](https://github.com/yanshil/fusion2urdf/blob/images/addin.png)
-
-
 
 #### Before using this script
 
