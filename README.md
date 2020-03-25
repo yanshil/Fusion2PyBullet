@@ -6,7 +6,7 @@ Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2ur
 
 A Fusion 360 script to export urdf files. This is a PyBullet adpative version. 
 
-**03/25/2020 BETA: Supporting exportation of nested components**
+**03/25/2020 BETA: Supporting exportation of  simple nested components (still didn't figure out where the bug is when dealing with complex models)**
 
 This exports:
 
@@ -14,7 +14,7 @@ This exports:
 * .stl files of your model
 * A example hello.py to load your model into PyBullet.
 
-If it is not working well (usually caused by wrongly set up joints relationships), you can try to use the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.
+**If you cannot figure out what went wrong with the model,(usually bugs are caused by wrongly set up joints relationships), please  use the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.**
 
 ### Fusion Add-in
 Add this script into Fusion 360 via Tools -> Add-Ins
@@ -60,3 +60,18 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    
 3. Enjoy from `python hello_bullet.py` !
 
+
+
+### Beta Notes
+
+For nested components, there could be tons of things cause problems... 
+
+Here are two I met with but not yet write a better notification. Get avoid of nested components will make things works though
+
+1. 
+
+![](./Errors/1.PNG)
+
+2. 
+
+![](./Errors/2.PNG)
