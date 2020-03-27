@@ -34,6 +34,7 @@ def run(context):
         ui = app.userInterface
         product = app.activeProduct
         design = adsk.fusion.Design.cast(product)
+        
         title = 'Fusion2URDF'
         if not design:
             ui.messageBox('No active Fusion design', title)
@@ -52,7 +53,10 @@ def run(context):
         
         save_dir = save_dir + '/' + robot_name
         try: os.mkdir(save_dir)
-        except: pass     
+        except: pass
+        
+        ## Set "Do not capture design history"
+        design.designType = adsk.fusion.DesignTypes.DirectDesignType
         
         # --------------------
         # set dictionaries
