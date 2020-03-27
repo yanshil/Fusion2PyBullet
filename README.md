@@ -6,7 +6,9 @@ Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2ur
 
 A Fusion 360 script to export urdf files. This is a PyBullet adpative version. 
 
-**03/25/2020 BETA: Supporting exportation of  simple nested components (still didn't figure out where the bug is when dealing with complex models)**
+**03/25/2020 BETA: Supporting exportation of  simple nested components.**
+
+03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes
 
 This exports:
 
@@ -14,12 +16,25 @@ This exports:
 * .stl files of your model
 * A example hello.py to load your model into PyBullet.
 
-**If you cannot figure out what went wrong with the model,(usually bugs are caused by wrongly set up joints relationships), please  use the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.**
+###  Important: what to do when error pops out?
+
+* Bugs are usually  caused by wrongly set up joints relationships
+* Nest-component support might also lead to undocumented bugs. So remove the nesting structure helps a lot.
+
+Since the script still cannot showing warnings and errors elegantly, if you cannot figure out what went wrong with the model while bugs are usually  caused by wrongly set up joints relationships, you can do the following things:
+
+1. Make sure every joints are set up correct (parent and child relationship). If failed ---> 
+2. Re-tidy your design to make it not include any nest-components. Use this script. If failed --->  
+3. Try the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.
+
+
 
 ### Fusion Add-in
 Add this script into Fusion 360 via Tools -> Add-Ins
 
-![](https://github.com/yanshil/fusion2urdf/blob/images/addin.png)
+![](./imgs/1_plugin.png)
+
+![](./imgs/2_script.png)
 
 #### Before using this script
 
@@ -30,7 +45,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 
 #### Using script inside Fusion 360: Example
 
-1. Set up the compoenents properly
+1. Set up the components properly
 
 - [x] A base_link
 
@@ -52,26 +67,10 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 	```
 
 2. Run the script and select storing location
-   * Note: **Don't save** your file after running the scripts! Some temporary "old component" will be created
-   
-   * ![](https://github.com/yanshil/fusion2urdf/blob/images/2.png)
-   
-   * ![](https://github.com/yanshil/fusion2urdf/blob/images/files.png)
+   * Note: **Don't save** your file after running the scripts! DesignType will be set to "Direct Mode" and some temporary components will be created. That's not the changes you want!
+   * ![](./imgs/3_success.png)
+   * ![](./imgs/4_close.png)
+   * ![](./imgs/5_files.png)
    
 3. Enjoy from `python hello_bullet.py` !
 
-
-
-### Beta Notes
-
-For nested components, there could be tons of things cause problems... 
-
-Here are two I met with but not yet write a better notification. Get avoid of nested components will make things works though
-
-1. 
-
-![](./Errors/1.PNG)
-
-2. 
-
-![](./Errors/2.PNG)
