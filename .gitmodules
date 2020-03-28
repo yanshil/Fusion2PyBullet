@@ -1,4 +1,0 @@
-[submodule "export2pybullet"]
-	path = export2pybullet
-	url = git@github.com:yanshil/fusion2urdf.git
-	branch = export2pybullet

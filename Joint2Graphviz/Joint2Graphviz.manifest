@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"script",
+	"author":	"yanshil",
+	"description":	{
+		"":	"Export a Graphviz map for the assembled components"
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}
