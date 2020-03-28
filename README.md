@@ -112,6 +112,6 @@ digraph G {  "R_BotPlate1" -> "R_MiddleCylinder1"
 
 Here I can find out 
 
-1.  "base_link" is wrongly set as topplate's child
-2. R_MiddleCylinder should be TopPlate's child but it's set as parent
+1.  base_link is wrongly set as R_TopPlate's child
+2. R_MiddleCylinder should be R_TopPlate's child but it's set as parent
 3. R_BotPlate should be R_MiddleCylinder's child but it's set as parent.
