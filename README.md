@@ -6,17 +6,22 @@ Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2ur
 
 A Fusion 360 script to export urdf files. This is a PyBullet adpative version. 
 
-**03/25/2020 BETA: Supporting exportation of  simple nested components.**
-
-03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes
-
-03/27 update2: Add a supplementary script **Joint2Graphviz** to check assembled structures.
+Note: Only support "Revolute", "Rigid" and "Slider" joint currently. Also I don't have plans to work on rigid group and other types of joints.
 
 This exports:
 
 * .urdf files of the model
 * .stl files of your model
 * A example hello.py to load your model into PyBullet.
+
+---
+
+**03/25/2020: Supporting exportation of nested components.**
+
+03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes
+
+03/27 update2: Add a supplementary script **Joint2Graphviz** to check assembled structures.
+
 
 ### Fusion Add-in
 Add this script into Fusion 360 via Tools -> Add-Ins
