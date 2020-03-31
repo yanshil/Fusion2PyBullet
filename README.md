@@ -18,7 +18,7 @@ This exports:
 
 **03/25/2020: Supporting exportation of nested components.**
 
-03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes
+03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)
 
 03/27 update2: Add a supplementary script **Joint2Graphviz** to check assembled structures.
 
@@ -36,7 +36,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    1. Change language preference to English
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
 2. Set up `base_link`
-3. Suggestion: Use **Joint2Graphviz** to check your assembled structure! See https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz for details
+3. Suggestion: Use [**Joint2Graphviz**](https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz) to check your assembled structure! 
 
 #### Using script inside Fusion 360: Example
 
@@ -48,7 +48,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 
 - [x] **IMPORTANT! Set up joints properly** 
 
-	* Supplementary script: **Joint2Graphviz** will generate a txt file capable for Graphviz. Copy the content to http://www.webgraphviz.com/ to check the graph. Usually a correct model should be a DAG with 'base_link' as the only root.
+	* Supplementary script: **Joint2Graphviz** will generate a txt file capable for Graphviz. Copy the content to [WebGraphviz](http://www.webgraphviz.com/) to check the graph. Usually a correct model should be a DAG with 'base_link' as the only root.
 	
 	* In fusion, when you hit 'J' to assemble joints, note that the exporter consider **component 1 as 'child' and component 2 as 'parent'**. For example, when you want to assemble a 4-wheel car with middle cuboid as `base_link`, you should assemble the vehicle with wheel as component 1 and 'base_link' as component 2.
 
@@ -81,8 +81,8 @@ Since the script still cannot showing warnings and errors elegantly, if you cann
 
 1. Make sure every joints are set up correct (parent and child relationship). If failed ---> 
 2. Re-tidy your design to make it not include any nest-components. Use this script. If failed --->  
-3. Try the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.
+3. Try the stable version [Branch: stable](https://github.com/yanshil/Fusion2Pyblluet/tree/stable).
 
 ## Joint2Graphviz
 
-Check https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz for details
+Check [Joint2Graphviz](https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz) for details
