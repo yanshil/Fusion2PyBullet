@@ -36,6 +36,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    1. Change language preference to English
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
 2. Set up `base_link`
+3. Suggestion: Use **Joint2Graphviz** to check your assembled structure! See https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz for details
 
 #### Using script inside Fusion 360: Example
 
@@ -47,7 +48,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 
 - [x] **IMPORTANT! Set up joints properly** 
 
-	* Supplementary script: **Joint2Graphviz** will generate a txt file capable for Graphviz. Copy the content to http://www.webgraphviz.com/ to check the graph. Usually a correct model should be a DAG with 'base_link' as the root.
+	* Supplementary script: **Joint2Graphviz** will generate a txt file capable for Graphviz. Copy the content to http://www.webgraphviz.com/ to check the graph. Usually a correct model should be a DAG with 'base_link' as the only root.
 	
 	* In fusion, when you hit 'J' to assemble joints, note that the exporter consider **component 1 as 'child' and component 2 as 'parent'**. For example, when you want to assemble a 4-wheel car with middle cuboid as `base_link`, you should assemble the vehicle with wheel as component 1 and 'base_link' as component 2.
 
@@ -82,41 +83,6 @@ Since the script still cannot showing warnings and errors elegantly, if you cann
 2. Re-tidy your design to make it not include any nest-components. Use this script. If failed --->  
 3. Try the stable version https://github.com/yanshil/Fusion2Pyblluet/tree/stable.
 
+## Joint2Graphviz
 
-### Joint2Graphviz
-* Sometimes you need to set "Do not capture design history" before running the script.
-* Copy the content of the generated "graph.txt" and go to http://www.webgraphviz.com/
-* Example: One of the wrongly assembled mecanum wheel gives
-
-```
-digraph G {  "R_BotPlate1" -> "R_MiddleCylinder1"
-  "R_MiddleCylinder1" -> "R_TopPlate1"
-  "R_TopPlate1" -> "base_link1"
-  "R_TopPlate1" -> "Wheel_set1Roller1"
-  "R_TopPlate1" -> "Wheel_set2Roller1"
-  "R_TopPlate1" -> "Wheel_set3Roller1"
-  "R_TopPlate1" -> "Wheel_set4Roller1"
-  "R_TopPlate1" -> "Wheel_set6Roller1"
-  "R_TopPlate1" -> "Wheel_set7Roller1"
-  "R_TopPlate1" -> "Wheel_set8Roller1"
-  "R_TopPlate1" -> "Wheel_set5Roller1"
-  "Wheel_set1Roller1" -> "Wheel_set1Satellite_Wheel1"
-  "Wheel_set2Roller1" -> "Wheel_set2Satellite_Wheel1"
-  "Wheel_set3Roller1" -> "Wheel_set3Satellite_Wheel1"
-  "Wheel_set4Roller1" -> "Wheel_set4Satellite_Wheel1"
-  "Wheel_set5Roller1" -> "Wheel_set5Satellite_Wheel1"
-  "Wheel_set6Roller1" -> "Wheel_set6Satellite_Wheel1"
-  "Wheel_set7Roller1" -> "Wheel_set7Satellite_Wheel1"
-  "Wheel_set8Roller1" -> "Wheel_set8Satellite_Wheel1"
-}
-```
-
- Click Generate Graph and I get ![](./imgs/6_graphviz.PNG)
-
-
-
-Here I can find out 
-
-1.  base_link is wrongly set as R_TopPlate's child
-2. R_MiddleCylinder should be R_TopPlate's child but it's set as parent
-3. R_BotPlate should be R_MiddleCylinder's child but it's set as parent.
+Check https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz for details
