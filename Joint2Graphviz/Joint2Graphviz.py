@@ -44,6 +44,7 @@ def make_joints_dict(root, msg):
     
     ## Traverse non-root nested components
     nonroot_joints_dict = traverseAssembly(root.occurrences.asList, 1)
+    print(nonroot_joints_dict)
     
     ## Combine
     joints_dict.update(nonroot_joints_dict)
@@ -51,14 +52,15 @@ def make_joints_dict(root, msg):
     return joints_dict, msg
 
 def traverseAssembly(occurrences, currentLevel, joints_dict={}, msg='Successful'):
-    
-    for i in range(0, occurrences.count):
+    for i in range(occurrences.count):
         occ = occurrences.item(i)
 
         if occ.component.joints.count > 0:
             for joint in occ.component.joints:
                 ass_joint = joint.createForAssemblyContext(occ)
                 joint_dict = get_joint_dict(ass_joint)
+                key = get_valid_filename(occ.fullPathName) + '_' + joint.name
+                joints_dict[key] = joint_dict
         else:
             pass
             # print('Level {} {} has no joints.'.format(currentLevel, occ.name))
@@ -89,8 +91,8 @@ def get_joint_dict(joint):
 def get_code(root):
     code = ''
     joints_dict, msg = make_joints_dict(root, msg='Successful')
-    for _, value in joints_dict.items():
-        code += "  \"{}\" -> \"{}\"\n".format(value['parent'], value['child'])
+    for key, value in joints_dict.items():
+        code += "  \"{}\" -> \"{}\" [ label = \"{}\" ] \n".format(value['parent'], value['child'], key)
     return code
     
 
