@@ -36,7 +36,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    1. Change language preference to English
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
 2. Set up `base_link`
-3. Suggestion: Use [**Joint2Graphviz**](https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz) to check your assembled structure! 
+3. Suggestion: Use [**Joint2Graphviz**](https://github.com/yanshil/Joint2Graphviz) to check your assembled structure! 
 
 #### Using script inside Fusion 360: Example
 
@@ -85,4 +85,4 @@ Since the script still cannot showing warnings and errors elegantly, if you cann
 
 ## Joint2Graphviz
 
-Check [Joint2Graphviz](https://github.com/yanshil/Fusion2PyBullet/wiki/Joint2Graphviz) for details
+Check [Joint2Graphviz](https://github.com/yanshil/Joint2Graphviz) for details
