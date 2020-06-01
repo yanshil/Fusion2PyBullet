@@ -1,5 +1,7 @@
 # Fusion2Pybullet
 
+[简体中文](README.zh.md) | English
+
 Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf). 
 
 ### What is this script?
