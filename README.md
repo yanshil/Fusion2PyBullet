@@ -39,10 +39,13 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
 2. Set up `base_link`
 3. Suggestion: Use [**Joint2Graphviz**](https://github.com/yanshil/Joint2Graphviz) to check your assembled structure! 
+4. **Check if your default unit is mm or not. If you set it to some other unit, you need to manually adjust the scale when exporting the stl fils. [See this](#what-if my-unit-is-not-mm)** 
 
 #### Using script inside Fusion 360: Example
 
 1. Set up the components properly
+
+- [x] Unit should be mm
 
 - [x] A base_link
 
@@ -73,8 +76,9 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    
 3. Enjoy from `python hello_bullet.py` !
 
+## FAQ
 
-###  Important: what to do when error pops out?
+###  What to do when error pops out
 
 * Bugs are usually  caused by wrongly set up joints relationships
 * Nest-component support might also lead to undocumented bugs. So remove the nesting structure helps a lot.
@@ -84,7 +88,35 @@ Since the script still cannot showing warnings and errors elegantly, if you cann
 1. Make sure every joints are set up correct (parent and child relationship). If failed ---> 
 2. Re-tidy your design to make it not include any nest-components. Use this script. If failed --->  
 3. Try the stable version [Branch: stable](https://github.com/yanshil/Fusion2Pyblluet/tree/stable).
+4. Run with debug mode and check what happens ![](./imgs/6_debug.PNG)
 
-## Joint2Graphviz
+### How to check if I assembled my links and joints correctly
 
-Check [Joint2Graphviz](https://github.com/yanshil/Joint2Graphviz) for details
+A supporting script here: [Joint2Graphviz](https://github.com/yanshil/Joint2Graphviz) for details
+
+### What if my unit is not mm
+
+You have to modify `Bullet_URDF_Exporter/core/Link.py`. Search `scale`
+
+(Please ping me if you find any other place that should also be modified)
+
+```
+        # visual
+        visual = SubElement(link, 'visual')
+        origin_v = SubElement(visual, 'origin')
+        origin_v.attrib = {'xyz':' '.join([str(_) for _ in self.xyz]), 'rpy':'0 0 0'}
+        geometry_v = SubElement(visual, 'geometry')
+        mesh_v = SubElement(geometry_v, 'mesh')
+        mesh_v.attrib = {'filename': self.repo + self.name + '.stl','scale':'0.001 0.001 0.001'} ## scale = 0.001 means mm to m. Modify it according if using another unit
+        material = SubElement(visual, 'material')
+        material.attrib = {'name':'silver'}
+        
+        # collision
+        collision = SubElement(link, 'collision')
+        origin_c = SubElement(collision, 'origin')
+        origin_c.attrib = {'xyz':' '.join([str(_) for _ in self.xyz]), 'rpy':'0 0 0'}
+        geometry_c = SubElement(collision, 'geometry')
+        mesh_c = SubElement(geometry_c, 'mesh')
+        mesh_c.attrib = {'filename': self.repo + self.name + '.stl','scale':'0.001 0.001 0.001'} ## scale = 0.001 means mm to m. Modify it according if using another unit
+        material = SubElement(visual, 'material')
+```
