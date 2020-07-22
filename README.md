@@ -39,7 +39,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
    2. Rename any full-width symbol to half-width symbol (like `。` and `（）`)
 2. Set up `base_link`
 3. Suggestion: Use [**Joint2Graphviz**](https://github.com/yanshil/Joint2Graphviz) to check your assembled structure! 
-4. **Check if your default unit is mm or not. If you set it to some other unit, you need to manually adjust the scale when exporting the stl fils. [See this](#what-if my-unit-is-not-mm)** 
+4. **Check if your default unit is mm or not. If you set it to some other unit, you need to manually adjust the scale when exporting the stl fils. [See FAQ](#faq)** 
 
 #### Using script inside Fusion 360: Example
 
