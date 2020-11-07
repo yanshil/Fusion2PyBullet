@@ -1,0 +1,3 @@
+[submodule "Joint2Graphviz"]
+	path = Joint2Graphviz
+	url = https://github.com/yanshil/Joint2Graphviz.git
