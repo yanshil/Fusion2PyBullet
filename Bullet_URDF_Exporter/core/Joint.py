@@ -63,8 +63,11 @@ class Joint:
             limit = SubElement(joint, 'limit')
             limit.attrib = {'upper': str(self.upper_limit), 'lower': str(self.lower_limit),
                             'effort': '100', 'velocity': '100'}
-        calibration.attrib = {'link': 0.0}
-            
+        calibration.attrib = {'link': '0.0'}
+        dynamics.attrib = {'damping':'0.0', 'friction':'0.0'}
+        limit.attrib = {'effort':'30', 'velocity':'1.0', 'lower':'3.14', 'upper':'-3.14'}
+        safety_controller.attrib = {'k_velocity':'1.5', 'k_position':'15', 'soft_lower_limit':'-2.0', 'soft_upper_limit':'0.5'}
+        
         self.joint_xml = "\n".join(utils.prettify(joint).split("\n")[1:])
 
     def make_transmission_xml(self):
