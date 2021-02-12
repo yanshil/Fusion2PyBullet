@@ -63,6 +63,7 @@ class Joint:
             limit = SubElement(joint, 'limit')
             limit.attrib = {'upper': str(self.upper_limit), 'lower': str(self.lower_limit),
                             'effort': '100', 'velocity': '100'}
+        calibration.attrib = {'link': 0.0}
             
         self.joint_xml = "\n".join(utils.prettify(joint).split("\n")[1:])
 
