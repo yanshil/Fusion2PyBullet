@@ -66,8 +66,7 @@ class Joint:
         calibration.attrib = {'link': '0.0'}
         dynamics.attrib = {'damping':'0.0', 'friction':'0.0'}
         limit.attrib = {'effort':'30', 'velocity':'1.0', 'lower':'3.14', 'upper':'-3.14'}
-        safety_controller.attrib = {'k_velocity':'1.5', 'k_position':'15', 'soft_lower_limit':'-2.0', 'soft_upper_limit':'0.5'}
-        
+
         self.joint_xml = "\n".join(utils.prettify(joint).split("\n")[1:])
 
     def make_transmission_xml(self):
