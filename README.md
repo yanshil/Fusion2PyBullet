@@ -18,6 +18,11 @@ This exports:
 
 ---
 
+03/03/2021: Pull the fix for xyz calculation from 01/09/2021 commit `d2e754086f092ac81c481a0c3862e3cecb1f4dfe` in [syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf/commit/d2e754086f092ac81c481a0c3862e3cecb1f4dfe)
+
+- If you see that your components move arround the map center in rviz try this update
+- More Infos see [this link](https://forums.autodesk.com/t5/fusion-360-api-and-scripts/difference-of-geometryororiginone-and-geometryororiginonetwo/m-p/9837767)
+
 **03/25/2020: Supporting exportation of nested components.**
 
 03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)

@@ -18,6 +18,11 @@ P.S. 当前仅支持基本的“旋转”，“刚性”和“滑块”关节。
 
 ---
 
+03/03/2021: 同步原 repo 的 xyz 计算方式  commit `d2e754086f092ac81c481a0c3862e3cecb1f4dfe` in [syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf/commit/d2e754086f092ac81c481a0c3862e3cecb1f4dfe)
+
+- 如果你的模型有旋转轴错位的问题请尝试一下这个新版本
+- 问题详见 [于此](https://forums.autodesk.com/t5/fusion-360-api-and-scripts/difference-of-geometryororiginone-and-geometryororiginonetwo/m-p/9837767)
+
 **03/25/2020: 支持嵌套组件的导出(原repo并不支持此项)**
 
 03/27 更新: 加入“不捕获设计历史记录”，这可以修复一部分的导出问题。 参见 [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)
