@@ -54,6 +54,10 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 
 - [x] A base_link
 
+- [x] Your file should not conatin extra file link. If any, right click on the component, do 'Break Link'
+	- [x] File links will be generated when you do something like 'Insert into current design'
+	- [x] So please make sure you did had a backup when you do the 'Break link' operations.
+
 - [x] Check component and joint names (Set English as the language if necessary)
 
 - [x] **IMPORTANT! Set up joints properly** 
