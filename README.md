@@ -50,7 +50,7 @@ Add this script into Fusion 360 via Tools -> Add-Ins
 
 1. Set up the components properly
 
-- [x] Unit should be mm
+- [x] Unit should be mm (See [FAQ](#what-if-my-unit-is-not-mm) if it's not)
 
 - [x] A base_link
 
