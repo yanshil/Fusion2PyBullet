@@ -23,11 +23,11 @@ P.S. 当前仅支持基本的“旋转”，“刚性”和“滑块”关节。
 - 如果你的模型有旋转轴错位的问题请尝试一下这个新版本
 - 问题详见 [于此](https://forums.autodesk.com/t5/fusion-360-api-and-scripts/difference-of-geometryororiginone-and-geometryororiginonetwo/m-p/9837767)
 
+03/27/2020 更新2: 补充了一个脚本 **Joint2Graphviz** 用以检查模型结构。（用法：先运行Joing2Graphviz并查看关节结构，确认无误后再运行此脚本）
+
+03/27/2020 更新1: 加入“不捕获设计历史记录”，这可以修复一部分的导出问题。 参见 [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)
+
 **03/25/2020: 支持嵌套组件的导出(原repo并不支持此项)**
-
-03/27 更新: 加入“不捕获设计历史记录”，这可以修复一部分的导出问题。 参见 [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)
-
-03/27 更新: 补充了一个脚本 **Joint2Graphviz** 用以检查模型结构。（用法：先运行Joing2Graphviz并查看关节结构，确认无误后再运行此脚本）
 
 
 ### Fusion Add-in
