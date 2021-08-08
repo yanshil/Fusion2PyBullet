@@ -23,11 +23,11 @@ This exports:
 - If you see that your components move arround the map center in rviz try this update
 - More Infos see [this link](https://forums.autodesk.com/t5/fusion-360-api-and-scripts/difference-of-geometryororiginone-and-geometryororiginonetwo/m-p/9837767)
 
+03/27/2020 update2: Add a supplementary script **Joint2Graphviz** to check assembled structures.
+
+03/27/2020 update: Add "Do not Capture Design History" to fix InternalValidationError. See [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)
+
 **03/25/2020: Supporting exportation of nested components.**
-
-03/27 update: Add "Do not Capture Design History" to fix InternalValidationError. See [Developer Notes](https://github.com/yanshil/Fusion2Pyblluet/wiki/Developer-Notes)
-
-03/27 update2: Add a supplementary script **Joint2Graphviz** to check assembled structures.
 
 
 ### Fusion Add-in
