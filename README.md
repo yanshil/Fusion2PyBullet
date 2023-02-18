@@ -1,5 +1,7 @@
 # Fusion2Pybullet
 
+Archive Note: I will no longer sutdy and work in Robitics. Please fork and develop on your needs.
+
 [简体中文](README.zh.md) | English
 
 Developed from [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf). 
