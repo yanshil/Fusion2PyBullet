@@ -1,5 +1,7 @@
 # Fusion2Pybullet
 
+Note: 不再在这个领域深耕啦，这个仓库将被归档~请小伙伴们自行fork和开发~
+
 简体中文 | [English](README.md)
 
 基于 [@syuntoku14/fusion2urdf](https://github.com/syuntoku14/fusion2urdf) 开发
